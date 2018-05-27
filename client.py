@@ -1,4 +1,4 @@
-from socket import *
+import socket
 import json
 import time
 
@@ -48,14 +48,19 @@ class Action:
             'room': '#room_name'
         }
 
-action = Action()
-print(action.presence)
+def main():
+    # action = Action()
+    # print(action.presence)
 
-s = socket(AF_INET, SOCK_STREAM)
-s.connect(('localhost', 7777))
-message_in_binary = s.recv(1024)
-s.close()
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.connect(('localhost', 7777))
+    message_in_binary = s.recv(1024)
+    s.close()
 
-message_in_string = message_in_binary.decode('utf-8')
-message_in_json = json.loads(message_in_string)
-print("Json message {}".format(message_in_json))
+    message_in_string = message_in_binary.decode('utf-8')
+    message_in_json = json.loads(message_in_string)
+    print("Received JIM message: {}".format(message_in_json))
+
+if __name__ == '__main__':
+    main()
+
