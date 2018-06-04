@@ -61,6 +61,7 @@ def main():
     message_in_json = json.loads(message_in_string)
     print("Received JIM message: {}".format(message_in_json))
 
+
 if __name__ == '__main__':
     main()
 

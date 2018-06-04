@@ -1,4 +1,4 @@
-import socket
+from socket import socket, AF_INET, SOCK_STREAM
 import time
 import json
 
@@ -79,30 +79,32 @@ class Response:
             'alert': 'error on server side',
         }
 
-def main():
-
-    response = Response()
-    # print(response.ok)
-    print('Server ready.')
-
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s.bind(('', 7777))
-    s.listen(5)
-
-    try:
-        while True:
-            client, addr = s.accept()
-
-            response.ok['time'] = str(time.time())
-            message_in_json = json.dumps(response.ok)
-            message_in_bynary = message_in_json.encode('utf-8')
-            client.send(message_in_bynary)
-
-            client.close()
-    except KeyboardInterrupt:
-        print('Goodbye')
-        exit(0)
 
 if __name__ == '__main__':
-    main()
+
+    # response = Response()
+    # print(response.ok)
+    # print('Server ready.')
+
+    server_address = 'localhost'
+    server_port = '7777'
+
+    server = socket(AF_INET, SOCK_STREAM)
+    server.bind(server_address, server_port)
+    server.listen(15)
+    server.timeout(0.2)
+
+    clients = []
+
+    while True:
+        client, addr = server.accept()
+
+        response = Response()
+        response.ok['time'] = str(time.time())
+        message_in_json = json.dumps(response.ok)
+        message_in_binary = message_in_json.encode('utf-8')
+
+        client.send(message_in_binary)
+
+        client.close()
 
