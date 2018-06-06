@@ -74,7 +74,7 @@ def test_message_presence(account_name='guest'):
 
 def send_message(client_socket, message_to_send):
     message_in_json = json.dumps(message_to_send)
-    message_in_binary = message_in_json('utf-8')
+    message_in_binary = message_in_json.encode('utf-8')
     client_socket.send(message_in_binary)
 
 def receive_message(client_socket):
@@ -84,13 +84,14 @@ def receive_message(client_socket):
     # print("Received JIM message: {}".format(message_in_json))
     return message_in_json
 
-def main():
+
+if __name__ == '__main__':
     # action = Action()
     # print(action.presence)
 
     client = socket(AF_INET, SOCK_STREAM)
     server_address = 'localhost'
-    server_port = '7777'
+    server_port = 7777
     mode = 'read'
 
     action = Action()
@@ -103,13 +104,15 @@ def main():
     send_message(client, action.presence)
 
     received_message = receive_message(client)
+    print(received_message)
 
-    if received_message['responce'] == 200:
+    if received_message['response'] == '200':
         if mode == 'read':
             while True:
                 print('Reading...')
                 received_message = receive_message(client)
                 print(received_message)
+                print()
         elif mode == 'write':
             while True:
                 print('Writing...')
@@ -123,8 +126,3 @@ def main():
                 send_message(client, action.msg)
 
     client.close()
-
-
-
-if __name__ == '__main__':
-    main()
