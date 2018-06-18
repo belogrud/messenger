@@ -1,3 +1,4 @@
+# coding=utf-8
 from socket import socket, AF_INET, SOCK_STREAM
 import time
 import json
@@ -144,10 +145,6 @@ def write_responses(messages, w_clients, all_clients):
 
 
 if __name__ == '__main__':
-
-    # response = Response()
-    # print(response.ok)
-    # print('Server ready.')
 
     server_address = ''
     server_port = 7777

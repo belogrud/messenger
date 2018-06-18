@@ -1,3 +1,4 @@
+# coding=utf-8
 from socket import socket, AF_INET, SOCK_STREAM
 import json
 import time
@@ -86,9 +87,6 @@ def receive_message(client_socket):
 
 
 if __name__ == '__main__':
-    # action = Action()
-    # print(action.presence)
-
     client = socket(AF_INET, SOCK_STREAM)
     server_address = 'localhost'
     server_port = 7777
